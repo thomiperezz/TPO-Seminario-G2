@@ -10,56 +10,74 @@ const Dashboard = () => {
       <Sidebar />
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', backgroundColor: '#fff', borderBottom: '1px solid #E5E7EB' }}>
-          <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '700', color: 'var(--color-text)' }}>Dashboard</h1>
-          <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>Bienvenido/a, UADE User </span>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '1.5rem 2rem',
+          backgroundColor: '#fff',
+          borderBottom: '1px solid #E5E7EB'
+        }}>
+          <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '700', color: 'var(--color-text)' }}>
+            Dashboard
+          </h1>
         </div>
 
         {/* Contenido */}
-        <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', backgroundColor: 'var(--color-bg)' }}>
+        <div style={{
+          flex: 1,
+          padding: '2rem',
+          overflowY: 'auto',
+          backgroundColor: 'var(--color-bg)'
+        }}>
           {/* Tarjetas de estadísticas */}
           <div className="stats-grid">
-            <StatCard 
-              title="Cursos activos" 
-              value="3" 
-              description="Este cuatrimestre" 
+            <StatCard
+              title="Cursos activos"
+              value="3"
+              description="Este cuatrimestre"
             />
-            <StatCard 
-              title="Entregas sin revisar" 
-              value="7" 
-              description="En todos los cursos" 
+            <StatCard
+              title="Entregas sin revisar"
+              value="7"
+              description="En todos los cursos"
             />
-            <StatCard 
-              title="Alertas pedagógicas" 
-              value="9" 
-              description="Requieren atención" 
+            <StatCard
+              title="Alertas pedagógicas"
+              value="9"
+              description="Requieren atención"
             />
-            <StatCard 
-              title="Preguntas generadas" 
-              value="28" 
-              description="Para usar en clase" 
+            <StatCard
+              title="Preguntas generadas"
+              value="28"
+              description="Para usar en clase"
             />
           </div>
 
-          {/* Grid de 2 columnas */}
-          <div className="dashboard-grid">
+          {/* Grid de 2 columnas (sin tarjetas envolventes) */}
+          <div className="dashboard-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '2rem',
+            marginTop: '2rem'
+          }}>
             {/* Actividad reciente */}
-            <div className="card">
+            <div>
               <p className="card-title">Actividad reciente</p>
               <div className="activity-list">
-                <ActivityItem 
+                <ActivityItem
                   icon="📋"
                   title="Código copiado sin modificaciones"
                   description="Julián Méndez · 3° B Informática · TP Algoritmos"
                   type="error"
                 />
-                <ActivityItem 
+                <ActivityItem
                   icon="⚠️"
                   title="Explicación genérica del código"
                   description="Lucas Rodríguez · 3° B Informática · Trabajo práctico"
                   type="warning"
                 />
-                <ActivityItem 
+                <ActivityItem
                   icon="ℹ️"
                   title="Error conceptual en estructura de datos"
                   description="Sofía Pérez · 4° A Informática · Parcial"
@@ -69,24 +87,29 @@ const Dashboard = () => {
             </div>
 
             {/* Mis cursos */}
-            <div className="card">
+            <div>
               <p className="card-title">Mis cursos</p>
-              <div className="course-list">
-                <CourseCard 
+              <div className="course-list" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                width: '95%'
+              }}>
+                <CourseCard
                   code="3° B"
                   name="3° B — Informática"
                   info="28 alumnos · 3 actividades activas"
                   alerts="6 alertas"
                   alertType="warning"
                 />
-                <CourseCard 
+                <CourseCard
                   code="4° A"
                   name="4° A — Tecnologías de la Información"
                   info="25 alumnos · 2 actividades activas"
                   alerts="3 alertas"
                   alertType="info"
                 />
-                <CourseCard 
+                <CourseCard
                   code="5° C"
                   name="5° C — Programación"
                   info="22 alumnos · 1 actividad activa"

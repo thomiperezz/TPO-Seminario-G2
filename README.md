@@ -44,7 +44,6 @@ TPO-Seminario-G2/
 │   ├── services/                   # Servicios y APIs
 │   ├── utils/                      # Funciones auxiliares
 │   ├── App.jsx                     # Componente principal
-│   ├── index.css                   # Estilos base
 │   └── main.jsx                    # Punto de entrada
 ├── index.html                      # HTML principal
 ├── package.json                    # Dependencias del proyecto

@@ -1,25 +1,34 @@
-import React from 'react';
-import '../assets/styles/global.css';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
+  const menuItems = [
+    { key: 'dashboard', label: 'Dashboard', path: '/dashboard' },
+    { key: 'course', label: 'Cursos', path: '/course' },
+    { key: 'assist-correction', label: 'Corrección asistida', path: '/assist-correction' },
+    { key: 'check-questions', label: 'Preguntas de repaso', path: '/check-questions' }
+  ];
+
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
         <h1 className="sidebar-logo">
-          <span style={{ color: 'rgb(5,150,105)' }}>acompaña</span>
-          <span>educa</span>
-        </h1>
+        <span style={{ color: 'rgb(5, 150, 105)' }}>acompaña</span>
+        <span style={{ color: '#000000' }}>educa</span> 
+      </h1>
       </div>
-      <div className="sidebar-menu-label">MENÚ</div>
+      <p className="sidebar-menu-label">Menú</p>
       <nav className="sidebar-nav">
-        <a href="/dashboard" className="sidebar-link active">Dashboard</a>
-        <a href="/courses" className="sidebar-link">Entregas</a>
-        <a href="/correction" className="sidebar-link">Corrección asistida</a>
-        <a href="/check" className="sidebar-link">Preguntas de repaso</a>
-        <a href="/following" className="sidebar-link">Seguimiento</a>
-        <a href="/metrics" className="sidebar-link">Métricas del curso</a>
-        <a href="/configuration" className="sidebar-link">Configuración</a>
-        <a href="/profiles" className="sidebar-link">Perfil del alumno</a>
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.key}
+            to={item.path}
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? 'active' : ''}`
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
       </nav>
     </aside>
   );
