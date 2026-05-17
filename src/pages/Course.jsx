@@ -1,8 +1,9 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar.jsx';
 import CourseCard from '../components/CourseCard.jsx';
 
 const Course = () => {
+  const navigate = useNavigate();
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <Sidebar />
@@ -30,8 +31,7 @@ const Course = () => {
           >
             Cursos
           </h1>
-          <button className="add-course-btn">Agregar curso</button>
-        </div>
+          <button className="add-course-btn" onClick={() => navigate('/nuevo-curso')}>Agregar curso</button></div>
 
         <div
           style={{
