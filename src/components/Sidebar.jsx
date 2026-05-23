@@ -4,8 +4,8 @@ const Sidebar = () => {
   const menuItems = [
     { key: 'dashboard', label: 'Dashboard', path: '/dashboard' },
     { key: 'course', label: 'Cursos', path: '/course' },
-    { key: 'assist-correction', label: 'Corrección asistida', path: '/assist-correction' },
-    { key: 'check-questions', label: 'Preguntas de repaso', path: '/check-questions' }
+    { key: 'assistcorrection', label: 'Corrección asistida', path: '/assistcorrection' },
+    { key: 'checkquestions', label: 'Preguntas de repaso', path: '/checkquestions' }
   ];
 
   return (

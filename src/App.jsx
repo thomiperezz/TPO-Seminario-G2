@@ -6,6 +6,8 @@ import DetalleCurso from './pages/DetalleCurso';
 import NuevoCurso from './pages/NuevoCurso';
 import NuevaActividad from './pages/NuevaActividad';
 import PerfilAlumno from './pages/PerfilAlumno';
+import AssistCorrection from './pages/AssistCorrection';
+
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/course" element={<Course />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/assistcorrection" element={<AssistCorrection />} />
         <Route path="/" element={<Login />} />
         <Route path="/detalle-curso" element={<DetalleCurso />} />
         <Route path="/nuevo-curso" element={<NuevoCurso />} />
