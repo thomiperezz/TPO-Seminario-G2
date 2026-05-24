@@ -7,6 +7,7 @@ import NuevoCurso from './pages/NuevoCurso';
 import NuevaActividad from './pages/NuevaActividad';
 import PerfilAlumno from './pages/PerfilAlumno';
 import AssistCorrection from './pages/AssistCorrection';
+import PreguntasComprensión from './pages/PreguntasComprensión';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/course" element={<Course />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/assistcorrection" element={<AssistCorrection />} />
+        <Route path="/preguntas-comprensión" element={<PreguntasComprensión />} />
         <Route path="/" element={<Login />} />
         <Route path="/detalle-curso" element={<DetalleCurso />} />
         <Route path="/nuevo-curso" element={<NuevoCurso />} />

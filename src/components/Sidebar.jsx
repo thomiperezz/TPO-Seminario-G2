@@ -5,7 +5,7 @@ const Sidebar = () => {
     { key: 'dashboard', label: 'Dashboard', path: '/dashboard' },
     { key: 'course', label: 'Cursos', path: '/course' },
     { key: 'assistcorrection', label: 'Corrección asistida', path: '/assistcorrection' },
-    { key: 'checkquestions', label: 'Preguntas de repaso', path: '/checkquestions' }
+    { key: 'checkquestions', label: 'Preguntas de comprensión', path: '/preguntas-comprensión' }
   ];
 
   return (
