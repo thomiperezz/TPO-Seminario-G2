@@ -1,11 +1,41 @@
-import React from 'react';
 import '../assets/styles/global.css';
+import NavRuta from './navigation/NavRuta';
 
-const Header = ({ user, onAdd }) => {
+const Header = ({
+  title,
+  subtitle,
+  actionText,
+  onAction,
+  breadcrumbs = []
+}) => {
   return (
-    <header style={{ padding: '1rem', backgroundColor: '#fff', boxShadow: 'var(--shadow-sm)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: 'var(--color-text)' }}>Bienvenido/a, {user}</h2>
-      <button className="add-course-btn" onClick={onAdd}>Agregar curso</button>
+    <header className="app-header">
+
+      <div>
+        {breadcrumbs.length > 0 && (
+          <NavRuta items={breadcrumbs} />
+        )}
+        
+        <h2 className="app-header-title">
+          {title}
+        </h2>
+
+        {subtitle && (
+          <p className="app-header-subtitle">
+            {subtitle}
+          </p>
+        )}
+      </div>
+
+      {actionText && (
+        <button
+          className="add-course-btn"
+          onClick={onAction}
+        >
+          {actionText}
+        </button>
+      )}
+
     </header>
   );
 };

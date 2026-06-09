@@ -1,5 +1,5 @@
 //import React from 'react';
-import '../assets/styles/global.css';
+import '../../assets/styles/global.css';
 import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ code, name, info, alerts, alertType = 'info' }) => {

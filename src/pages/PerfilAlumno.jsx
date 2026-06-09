@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import NavRuta from '../components/NavRuta';
-import Insignia from '../components/Insignia';
+import Sidebar from '../components/navigation/Sidebar';
+import NavRuta from '../components/navigation/NavRuta';
+import Insignia from '../components/ui/Insignia';
 
 const PerfilAlumno = () => {
   const navigate = useNavigate();

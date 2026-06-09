@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import NavRuta from '../components/NavRuta';
+import Sidebar from '../components/navigation/Sidebar';
+import NavRuta from '../components/navigation/NavRuta';
 import '../assets/styles/global.css';
 
 /**

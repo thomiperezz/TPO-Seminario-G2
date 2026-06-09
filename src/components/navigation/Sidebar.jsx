@@ -1,12 +1,7 @@
 import { NavLink } from 'react-router-dom';
+import { menuItems } from '../../config/menuConfig';
 
 const Sidebar = () => {
-  const menuItems = [
-    { key: 'dashboard', label: 'Dashboard', path: '/dashboard' },
-    { key: 'course', label: 'Cursos', path: '/course' },
-    { key: 'assistcorrection', label: 'Corrección asistida', path: '/assistcorrection' },
-    { key: 'checkquestions', label: 'Preguntas de comprensión', path: '/preguntas-comprensión' }
-  ];
 
   return (
     <aside className="sidebar">

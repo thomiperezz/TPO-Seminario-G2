@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import NavRuta from '../components/NavRuta';
-import Toggle from '../components/toggle';
+import Sidebar from '../components/navigation/Sidebar';
+import NavRuta from '../components/navigation/NavRuta';
+import ToggleSwitch from '../components/ui/ToggleSwitch';
 
 const NuevaActividad = () => {
   const navigate = useNavigate();
@@ -78,8 +78,8 @@ const NuevaActividad = () => {
                   <div style={{ fontSize: '13px', color: '#1a1a1a' }}>{param.label}</div>
                   <div style={{ fontSize: '11px', color: '#999' }}>{param.sub}</div>
                 </div>
-                <Toggle
-                  inicial={parametros[param.key]}
+                <ToggleSwitch
+                  checked={parametros[param.key]}
                   onChange={(valor) => setParametros(prev => ({ ...prev, [param.key]: valor }))}
                 />
               </div>

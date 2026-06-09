@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/styles/global.css';
+import '../../assets/styles/global.css';
 
 const ActivityItem = ({ icon, title, description, type = 'info' }) => {
   return (

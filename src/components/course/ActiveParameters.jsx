@@ -1,5 +1,5 @@
-import '../assets/styles/global.css';
-import ToggleSwitch from './ToggleSwitch.jsx';
+import '../../assets/styles/global.css';
+import ToggleSwitch from '../ui/ToggleSwitch.jsx';
 
 /**
  * Componente ActiveParameters

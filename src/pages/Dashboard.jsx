@@ -1,127 +1,132 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar.jsx';
-import StatCard from '../components/StatCard.jsx';
-import ActivityItem from '../components/ActivityItem.jsx';
-import CourseCard from '../components/CourseCard.jsx';
+import MainLayout from '../layouts/MainLayout';
+import Header from '../components/Header';
+import StatCard from '../components/ui/StatCard.jsx';
+import ActivityItem from '../components/ui/ActivityItem.jsx';
+import CourseCard from '../components/course/CourseCard.jsx';
 
 const Dashboard = () => {
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <Sidebar />
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Header */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '1.5rem 2rem',
-          backgroundColor: '#fff',
-          borderBottom: '1px solid #E5E7EB'
-        }}>
-          <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '700', color: 'var(--color-text)' }}>
-            Dashboard
-          </h1>
-        </div>
+    <MainLayout>
+      <Header
+        title="Dashboard"
+        subtitle="Resumen general de actividad docente"
+        /*actionText="Agregar curso"
+        onAction={() => console.log('Agregar curso')}*/
+        breadcrumbs={[
+    {
+      label: 'Inicio',
+      ruta: '/dashboard'
+    }
+  ]}
+      />
+      <h1
+        style={{
+          marginTop: 0,
+          marginBottom: '0.5rem'
+        }}
+      >
+        Dashboard
+      </h1>
+      <p
+        style={{
+          color: '#6B7280',
+          marginBottom: '2rem'
+        }}
+      >
+        Resumen general de actividad docente
+      </p>
+      <div className="stats-grid">
+        <StatCard
+          title="Cursos"
+          value="12"
+          description="Cursos activos"
+        />
 
-        {/* Contenido */}
-        <div style={{
-          flex: 1,
-          padding: '2rem',
-          overflowY: 'auto',
-          backgroundColor: 'var(--color-bg)'
-        }}>
-          {/* Tarjetas de estadísticas */}
-          <div className="stats-grid">
-            <StatCard
-              title="Cursos activos"
-              value="3"
-              description="Este cuatrimestre"
-            />
-            <StatCard
-              title="Entregas sin revisar"
-              value="7"
-              description="En todos los cursos"
-            />
-            <StatCard
-              title="Alertas pedagógicas"
-              value="9"
-              description="Requieren atención"
-            />
-            <StatCard
-              title="Preguntas generadas"
-              value="28"
-              description="Para usar en clase"
-            />
-          </div>
+        <StatCard
+          title="Alumnos"
+          value="342"
+          description="Total registrados"
+        />
 
-          {/* Grid de 2 columnas (sin tarjetas envolventes) */}
-          <div className="dashboard-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '2rem',
-            marginTop: '2rem'
-          }}>
-            {/* Actividad reciente */}
-            <div>
-              <p className="card-title">Actividad reciente</p>
-              <div className="activity-list">
-                <ActivityItem
-                  icon="📋"
-                  title="Código copiado sin modificaciones"
-                  description="Julián Méndez · 3° B Informática · TP Algoritmos"
-                  type="error"
-                />
-                <ActivityItem
-                  icon="⚠️"
-                  title="Explicación genérica del código"
-                  description="Lucas Rodríguez · 3° B Informática · Trabajo práctico"
-                  type="warning"
-                />
-                <ActivityItem
-                  icon="ℹ️"
-                  title="Error conceptual en estructura de datos"
-                  description="Sofía Pérez · 4° A Informática · Parcial"
-                  type="info"
-                />
-              </div>
-            </div>
+        <StatCard
+          title="Alertas"
+          value="18"
+          description="Requieren revisión"
+        />
 
-            {/* Mis cursos */}
-            <div>
-              <p className="card-title">Mis cursos</p>
-              <div className="course-list" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                width: '95%'
-              }}>
-                <CourseCard
-                  code="3° B"
-                  name="3° B — Informática"
-                  info="28 alumnos · 3 actividades activas"
-                  alerts="6 alertas"
-                  alertType="warning"
-                />
-                <CourseCard
-                  code="4° A"
-                  name="4° A — Tecnologías de la Información"
-                  info="25 alumnos · 2 actividades activas"
-                  alerts="3 alertas"
-                  alertType="info"
-                />
-                <CourseCard
-                  code="5° C"
-                  name="5° C — Programación"
-                  info="22 alumnos · 1 actividad activa"
-                  alerts="Sin alertas"
-                  alertType="success"
-                />
-              </div>
-            </div>
+        <StatCard
+          title="Correcciones"
+          value="96"
+          description="Realizadas esta semana"
+        />
+      </div>
+      <div className="dashboard-grid">
+        <div className="card">
+          <h2 className="card-title">
+            Actividad reciente
+          </h2>
+
+          <div className="activity-list">
+
+            <ActivityItem
+              icon="⚠️"
+              type="error"
+              title="Posible código copiado"
+              description="Lucas Rodríguez · TP Algoritmos"
+            />
+
+            <ActivityItem
+              icon="🔔"
+              type="warning"
+              title="Corrección pendiente"
+              description="3° B Informática"
+            />
+
+            <ActivityItem
+              icon="ℹ️"
+              type="info"
+              title="Nueva entrega"
+              description="Matemática Aplicada"
+            />
+
           </div>
         </div>
-      </main>
-    </div>
+        <div className="card">
+          <h2 className="card-title">
+            Cursos
+          </h2>
+
+          <div className="course-list">
+
+            <CourseCard
+              code="3° B"
+              name="Informática"
+              info="32 alumnos"
+              alerts="6 alertas"
+              alertType="warning"
+            />
+
+            <CourseCard
+              code="4° A"
+              name="Programación"
+              info="28 alumnos"
+              alerts="Sin alertas"
+              alertType="success"
+            />
+
+            <CourseCard
+              code="5° C"
+              name="Algoritmos"
+              info="30 alumnos"
+              alerts="3 alertas"
+              alertType="info"
+            />
+
+          </div>
+        </div>
+      </div>
+    </MainLayout>
   );
 };
 

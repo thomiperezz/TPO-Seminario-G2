@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Sidebar from '../components/Sidebar.jsx';
-import FeedbackCard from '../components/FeedbackCard.jsx';
-import CodeViewer from '../components/CodeViewer.jsx';
-import ActiveParameters from '../components/ActiveParameters.jsx';
+import Sidebar from '../components/navigation/Sidebar.jsx';
+import FeedbackCard from '../components/ui/FeedbackCard.jsx';
+import CodeViewer from '../components/ui/CodeViewer.jsx';
+import ActiveParameters from '../components/course/ActiveParameters.jsx';
 import '../assets/styles/global.css';
 
 /**
