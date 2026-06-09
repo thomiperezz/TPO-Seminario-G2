@@ -7,15 +7,15 @@ const PerfilAlumno = () => {
   const navigate = useNavigate();
 
   const entregas = [
-    { titulo: 'TP — Algoritmos de ordenamiento', meta: 'Entregado · 2 versiones · 2 alertas', tipo: 'rojo', insignia: '2 alertas' },
-    { titulo: 'Parcial — Estructuras de control', meta: 'Entregado · 1 versión · 3 alertas', tipo: 'rojo', insignia: '3 alertas' },
-    { titulo: 'TP grupal — Proyecto web básico', meta: 'En proceso · 1 versión · Sin alertas', tipo: 'gris', insignia: 'En proceso' },
+    { titulo: 'TP — Algoritmos de ordenamiento', meta: 'Entregado · 2 versiones · 2 errores', tipo: 'rojo', insignia: '2 ❌' },
+    { titulo: 'Parcial — Estructuras de control', meta: 'Entregado · 1 versión · 3 errores', tipo: 'rojo', insignia: '3 ❌' },
+    { titulo: 'TP grupal — Proyecto web básico', meta: 'En proceso · 1 versión', tipo: 'gris', insignia: 'En proceso' },
   ];
 
   const evolucion = [
-    { fecha: 'Mayo 2026 · TP Algoritmos', texto: 'Código funcional pero sin comentarios. Explicación copiada de fuente externa. 2 alertas.', activo: true },
-    { fecha: 'Abril 2026 · Parcial estructuras de control', texto: 'Confunde bucles for y while. Usa estructuras complejas sin justificar. 3 alertas.', activo: true },
-    { fecha: 'Marzo 2026 · Primer TP', texto: 'Buen desempeño inicial. Código simple pero correcto. Sin alertas.', activo: false },
+    { fecha: 'Mayo 2026 · TP Algoritmos', texto: 'Código funcional pero sin comentarios. Explicación copiada de fuente externa. 2 errores.', activo: true },
+    { fecha: 'Abril 2026 · Parcial estructuras de control', texto: 'Confunde bucles for y while. Usa estructuras complejas sin justificar. 3 errores.', activo: true },
+    { fecha: 'Marzo 2026 · Primer TP', texto: 'Buen desempeño inicial. Código simple pero correcto.', activo: false },
   ];
 
   return (

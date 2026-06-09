@@ -88,7 +88,7 @@ const Dashboard = () => {
               code="3° B"
               name="Matemática"
               info="32 alumnos"
-              alerts="6 alertas"
+              alerts="6 ⚠️"
               alertType="warning"
             />
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
               code="4° A"
               name="Matemática"
               info="28 alumnos"
-              alerts="Sin alertas"
+              alerts="✅"
               alertType="success"
             />
 
@@ -104,7 +104,7 @@ const Dashboard = () => {
               code="5° C"
               name="Matemática"
               info="30 alumnos"
-              alerts="3 alertas"
+              alerts="3 ℹ️"
               alertType="info"
             />
 

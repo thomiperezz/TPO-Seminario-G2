@@ -112,7 +112,7 @@ const PreguntasComprensión = () => {
                 type="text"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ej: Ecuaciones cuadráticas"
+                placeholder="Ingrese un prompt sobre un tema de matemática "
                 style={{
                   width: '90%',
                   padding: '10px',

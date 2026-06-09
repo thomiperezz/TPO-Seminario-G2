@@ -14,10 +14,10 @@ const DetalleCurso = () => {
   const navigate = useNavigate();
 
   const alumnos = [
-    { iniciales: 'MG', nombre: 'Martina García', ultima: 'hace 2h', alertas: 1, tipo: 'amarillo', textoInsignia: '1 alerta', bg: '#E6F1FB', color: '#185FA5' },
-    { iniciales: 'LR', nombre: 'Lucas Rodríguez', ultima: 'hace 1 día', alertas: 2, tipo: 'rojo', textoInsignia: '2 alertas', bg: '#FAEEDA', color: '#854F0B' },
-    { iniciales: 'SP', nombre: 'Sofía Pérez', ultima: 'hace 3h', alertas: 0, tipo: 'verde', textoInsignia: 'Sin alertas', bg: '#FBEAF0', color: '#993556' },
-    { iniciales: 'JM', nombre: 'Julián Méndez', ultima: 'hace 3 días', alertas: 3, tipo: 'rojo', textoInsignia: '3 alertas', bg: '#EEEDFE', color: '#534AB7' },
+    { iniciales: 'MG', nombre: 'Martina García', ultima: 'hace 2h', alertas: 1, tipo: 'amarillo', textoInsignia: '1 ⚠️', bg: '#E6F1FB', color: '#185FA5' },
+    { iniciales: 'LR', nombre: 'Lucas Rodríguez', ultima: 'hace 1 día', alertas: 2, tipo: 'rojo', textoInsignia: '2 ❌', bg: '#FAEEDA', color: '#854F0B' },
+    { iniciales: 'SP', nombre: 'Sofía Pérez', ultima: 'hace 3h', alertas: 0, tipo: 'verde', textoInsignia: '✅', bg: '#FBEAF0', color: '#993556' },
+    { iniciales: 'JM', nombre: 'Julián Méndez', ultima: 'hace 3 días', alertas: 3, tipo: 'rojo', textoInsignia: '3 ❌', bg: '#EEEDFE', color: '#534AB7' },
   ];
 
   const dificultades = [

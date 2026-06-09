@@ -13,7 +13,7 @@ const StudentRow = ({ alumno }) => {
             </div>
             <div>
                 <div style={{ fontSize: '13px', fontWeight: '500' }}>{alumno.nombre}</div>
-                <div style={{ fontSize: '11px', color: '#666' }}>Última entrega {alumno.ultima} · {alumno.alertas > 0 ? `${alumno.alertas} alerta${alumno.alertas > 1 ? 's' : ''}` : 'Sin alertas'}</div>
+                <div style={{ fontSize: '11px', color: '#666' }}>Última entrega {alumno.ultima} · {alumno.alertas > 0 ? `${alumno.alertas} alerta${alumno.alertas > 1 ? 's' : ''}` : '✅'}</div>
             </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
