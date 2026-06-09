@@ -16,9 +16,9 @@ const Header = ({
           <NavRuta items={breadcrumbs} />
         )}
         
-        <h2 className="app-header-title">
+        <h1 className="app-header-title">
           {title}
-        </h2>
+        </h1>
 
         {subtitle && (
           <p className="app-header-subtitle">

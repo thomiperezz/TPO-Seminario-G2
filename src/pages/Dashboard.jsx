@@ -14,28 +14,13 @@ const Dashboard = () => {
         /*actionText="Agregar curso"
         onAction={() => console.log('Agregar curso')}*/
         breadcrumbs={[
-    {
-      label: 'Inicio',
-      ruta: '/dashboard'
-    }
-  ]}
+          {
+            label: 'Inicio',
+            ruta: '/dashboard'
+          }
+        ]}
       />
-      <h1
-        style={{
-          marginTop: 0,
-          marginBottom: '0.5rem'
-        }}
-      >
-        Dashboard
-      </h1>
-      <p
-        style={{
-          color: '#6B7280',
-          marginBottom: '2rem'
-        }}
-      >
-        Resumen general de actividad docente
-      </p>
+      
       <div className="stats-grid">
         <StatCard
           title="Cursos"
@@ -73,21 +58,21 @@ const Dashboard = () => {
               icon="⚠️"
               type="error"
               title="Posible código copiado"
-              description="Lucas Rodríguez · TP Algoritmos"
+              description="4° A - Lucas Rodríguez"
             />
 
             <ActivityItem
               icon="🔔"
               type="warning"
               title="Corrección pendiente"
-              description="3° B Informática"
+              description="3° B Matemática - María Gómez"
             />
 
             <ActivityItem
               icon="ℹ️"
               type="info"
               title="Nueva entrega"
-              description="Matemática Aplicada"
+              description="5° C Matemática - Juan Pérez"
             />
 
           </div>
@@ -101,7 +86,7 @@ const Dashboard = () => {
 
             <CourseCard
               code="3° B"
-              name="Informática"
+              name="Matemática"
               info="32 alumnos"
               alerts="6 alertas"
               alertType="warning"
@@ -109,7 +94,7 @@ const Dashboard = () => {
 
             <CourseCard
               code="4° A"
-              name="Programación"
+              name="Matemática"
               info="28 alumnos"
               alerts="Sin alertas"
               alertType="success"
@@ -117,7 +102,7 @@ const Dashboard = () => {
 
             <CourseCard
               code="5° C"
-              name="Algoritmos"
+              name="Matemática"
               info="30 alumnos"
               alerts="3 alertas"
               alertType="info"

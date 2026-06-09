@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Sidebar from '../components/navigation/Sidebar';
 import NavRuta from '../components/navigation/NavRuta';
 import '../assets/styles/global.css';
@@ -11,43 +12,46 @@ import '../assets/styles/global.css';
 const PreguntasComprensión = () => {
   const navigate = useNavigate();
 
-  // Datos hardcodeados según el requerimiento
-  const questions = [
-    {
-      id: 1,
-      category: 'Comprensión conceptual',
-      question: '¿Qué es una variable y para qué se utiliza dentro de un programa?',
-      description: 'Busca validar si el alumno comprende el concepto de almacenamiento de datos en memoria.'
-    },
-    {
-      id: 2,
-      category: 'Estructuras de control',
-      question: '¿Cuál es la diferencia entre una estructura condicional if y un ciclo while?',
-      description: 'Relacionada con el uso de decisiones y repeticiones dentro de un algoritmo.'
-    },
-    {
-      id: 3,
-      category: 'Tipos de datos',
-      question: '¿Por qué es importante elegir correctamente el tipo de dato de una variable?',
-      description: 'Permite evaluar si el alumno entiende la relación entre datos, operaciones y errores posibles.'
-    },
-    {
-      id: 4,
-      category: 'Funciones y modularización',
-      question: '¿Qué ventaja tiene dividir un programa en funciones o métodos?',
-      description: 'Busca que el alumno explique la importancia de organizar el código y evitar repeticiones.'
-    },
-    {
-      id: 5,
-      category: 'Resolución de problemas',
-      question: 'Si tuvieras que calcular el promedio de tres notas, ¿qué pasos seguirías para resolverlo en un programa?',
-      description: 'Pregunta orientada a evaluar pensamiento algorítmico básico y secuencia lógica de instrucciones.'
-    }
-  ];
-
   const handleExport = () => {
     console.log("Exportar preguntas");
     // Funcionalidad placeholder para el futuro
+  };
+
+  const [topic, setTopic] = useState('');
+  const [questionCount, setQuestionCount] = useState(5);
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const generateQuestions = async () => {
+    if (!topic.trim()) {
+      alert('Ingresá un tema');
+      return;
+    }
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        'http://localhost:8080/api/evaluation/questions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify({
+            originalAssigment: topic,
+            questionCount,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      setQuestions(data.questions || []);
+    } catch (error) {
+      alert('Error generando preguntas: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -91,6 +95,69 @@ const PreguntasComprensión = () => {
           </button>
         </div>
 
+        <div
+          style={{
+            background: '#fff',
+            border: '1px solid #E5E7EB',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '24px',
+          }}
+        >
+          <div>
+
+            <div style={{ flex: 1, marginBottom: '12px' }}>
+              <label>Tema: </label>
+              <input
+                type="text"
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                placeholder="Ej: Ecuaciones cuadráticas"
+                style={{
+                  width: '90%',
+                  padding: '10px',
+                  marginTop: '6px',
+                  borderRadius: '8px',
+                  border: '1px solid #D1D5DB'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '12px' }}>
+              <label>Cantidad: </label>
+              <input
+                type="number"
+                min="1"
+                max="20"
+                value={questionCount}
+                onChange={(e) => setQuestionCount(Number(e.target.value))}
+                style={{
+                  width: '10%',
+                  padding: '10px',
+                  marginTop: '6px',
+                  borderRadius: '8px',
+                  border: '1px solid #D1D5DB'
+                }}
+              />
+            </div>
+
+            <button
+              onClick={generateQuestions}
+              disabled={loading}
+              style={{
+                padding: '10px 16px',
+                border: 'none',
+                borderRadius: '8px',
+                background: '#1D9E75',
+                color: '#fff',
+                cursor: 'pointer'
+              }}
+            >
+              {loading ? 'Generando...' : 'Generar'}
+            </button>
+
+          </div>
+        </div>
         {/* Banner Informativo */}
         <div style={{ 
           background: '#F3F4F6', 
@@ -112,27 +179,70 @@ const PreguntasComprensión = () => {
             margin: '24px 0',
           }} />
         {/* Lista de Tarjetas de Preguntas */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '800px' }}>
-          {questions.map((item) => (
-            <div key={item.id} className="question-card" style={{ 
-              background: '#FFFFFF', 
-              border: '1px solid #E5E7EB', 
-              borderRadius: '12px', 
-              padding: '20px',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-            }}>
-              <div style={{ fontSize: '12px', color: '#6B7280', marginBottom: '8px' }}>
-                Pregunta {item.id} — {item.category}
+        {!loading && questions.length === 0 && (
+          <div
+            style={{
+              background: '#fff',
+              border: '1px dashed #D1D5DB',
+              borderRadius: '12px',
+              padding: '32px',
+              textAlign: 'center',
+              color: '#6B7280'
+            }}
+          >
+            Ingresá un tema de matemática y generá preguntas.
+          </div>
+        )}
+        {loading && (
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: '12px',
+              padding: '24px',
+              textAlign: 'center'
+            }}
+          >
+            Generando preguntas con IA...
+          </div>
+        )}
+        {!loading && questions.length > 0 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '800px' }}>
+            {questions.map((question, index) => (
+              <div
+                key={index}
+                className="question-card"
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '12px',
+                    color: '#6B7280',
+                    marginBottom: '8px'
+                  }}
+                >
+                  Pregunta {index + 1}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    color: '#111827',
+                    lineHeight: '1.4'
+                  }}
+                >
+                  {question}
+                </div>
               </div>
-              <div style={{ fontSize: '15px', fontWeight: '600', color: '#111827', marginBottom: '8px', lineHeight: '1.4' }}>
-                {item.question}
-              </div>
-              <div style={{ fontSize: '13px', color: '#6B7280', lineHeight: '1.5' }}>
-                {item.description}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

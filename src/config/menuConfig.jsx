@@ -19,4 +19,9 @@ export const menuItems = [
     label: 'Preguntas de comprensión',
     path: '/preguntas-comprensión',
   },
+  {
+    key: 'exit',
+    label: 'Salir  📤',
+    path: '/',
+  },
 ];

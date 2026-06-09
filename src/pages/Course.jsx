@@ -6,28 +6,28 @@ const Course = () => {
   const courses = [
     {
       code: '3° B',
-      name: 'Informática',
+      name: 'Matemática',
       info: '32 alumnos',
       alerts: '6 alertas',
       alertType: 'warning'
     },
     {
       code: '4° A',
-      name: 'Programación',
+      name: 'Matemática',
       info: '28 alumnos',
       alerts: 'Sin alertas',
       alertType: 'success'
     },
     {
       code: '5° C',
-      name: 'Algoritmos',
+      name: 'Matemática',
       info: '30 alumnos',
       alerts: '3 alertas',
       alertType: 'info'
     },
     {
       code: '6° A',
-      name: 'Base de Datos',
+      name: 'Matemática',
       info: '25 alumnos',
       alerts: '1 alerta',
       alertType: 'warning'
