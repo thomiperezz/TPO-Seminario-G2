@@ -3,6 +3,8 @@ import Sidebar from '../components/navigation/Sidebar.jsx';
 import FeedbackCard from '../components/ui/FeedbackCard.jsx';
 import CodeViewer from '../components/ui/CodeViewer.jsx';
 import ActiveParameters from '../components/course/ActiveParameters.jsx';
+import MainLayout from '../layouts/MainLayout';
+import Header from '../components/Header';
 import '../assets/styles/global.css';
 
 /**
@@ -98,30 +100,22 @@ const AssistCorrection = () => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      {/* Sidebar */}
-      <Sidebar />
+    <MainLayout>
+      <Header
+        title="Corrección asistida"
+        breadcrumbs={[
+          {
+            label: 'Inicio',
+            ruta: '/dashboard'
+          },
+          {
+            label: 'Corrección asistida'
+          }
+        ]}
+      />
 
       {/* Main Content */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Header - Título */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '1.5rem 2rem',
-          backgroundColor: '#fff',
-          borderBottom: '1px solid #E5E7EB'
-        }}>
-          <h1 style={{
-            margin: 0,
-            fontSize: '1.5rem',
-            fontWeight: '700',
-            color: 'var(--color-text)'
-          }}>
-            Corrección asistida
-          </h1>
-        </div>
 
         {/* Controles - Selectores */}
         <div className="assist-correction-controls">
@@ -280,7 +274,7 @@ const AssistCorrection = () => {
           </div>
         </div>
       </main>
-    </div>
+    </MainLayout>
   );
 };
 

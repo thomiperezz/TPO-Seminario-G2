@@ -31,7 +31,7 @@ const PerfilAlumno = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '500' }}>Lucas Rodríguez</h1>
           <button
-            onClick={() => navigate('/correccion-asistida')}
+            onClick={() => navigate('/assistcorrection')}
             style={{ padding: '7px 14px', borderRadius: '8px', border: 'none', background: '#1D9E75', color: '#fff', fontSize: '13px', cursor: 'pointer', fontWeight: '500' }}
           >
             ✏ Ir a corrección

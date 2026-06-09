@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Sidebar from '../components/navigation/Sidebar';
 import NavRuta from '../components/navigation/NavRuta';
+import MainLayout from '../layouts/MainLayout';
+import Header from '../components/Header';
 import '../assets/styles/global.css';
 
 /**
@@ -55,45 +57,22 @@ const PreguntasComprensión = () => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <Sidebar />
+    <MainLayout>
+      <Header
+        title="Preguntas de Comprensión"
+        actionText="Exportar preguntas"
+        onAction={handleExport}
+        breadcrumbs={[
+          {
+            label: 'Inicio',
+            ruta: '/dashboard'
+          },
+          {
+            label: 'Preguntas de Comprensión'
+          }
+        ]}
+      />
       <main style={{ flex: 1, overflowY: 'auto', padding: '24px 28px', backgroundColor: 'var(--color-bg)' }}>
-
-        {/* Header - Título y Acción */}
-          <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '1.5rem 2rem',
-                  backgroundColor: '#fff'
-            }}>
-          <h1 style={{
-            margin: 0,
-            fontSize: '1.5rem',
-            fontWeight: '700',
-            color: 'var(--color-text)'
-          }}>
-            Preguntas de Comprensión
-          </h1>
-          <button
-            onClick={handleExport}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '6px', 
-              padding: '7px 14px', 
-              borderRadius: '8px', 
-              border: 'none', 
-              background: '#1D9E75', 
-              color: '#fff', 
-              fontSize: '13px', 
-              cursor: 'pointer', 
-              fontWeight: '500' 
-            }}
-          >
-            <span style={{ fontSize: '16px' }}>↓</span> Exportar preguntas
-          </button>
-        </div>
 
         <div
           style={{
@@ -244,7 +223,7 @@ const PreguntasComprensión = () => {
           </div>
         )}
       </main>
-    </div>
+    </MainLayout>
   );
 };
 
