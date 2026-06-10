@@ -35,7 +35,7 @@ const Dashboard = () => {
         />
 
         <StatCard
-          title="Alertas"
+          title="Notificaciones"
           value="18"
           description="Requieren revisión"
         />

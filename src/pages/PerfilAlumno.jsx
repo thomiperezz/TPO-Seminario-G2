@@ -41,7 +41,7 @@ const PerfilAlumno = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '24px' }}>
           {[
             { label: 'Actividades entregadas', value: '6', sub: 'de 8 asignadas' },
-            { label: 'Alertas totales', value: '5', sub: 'En todo el período', valueColor: '#A32D2D' },
+            { label: 'Notificaciones totales', value: '5', sub: 'En todo el período', valueColor: '#A32D2D' },
             { label: 'Promedio de versiones', value: '2.1', sub: 'Por trabajo entregado' },
             { label: 'Última actividad', value: 'Hace 1 día', sub: 'TP Algoritmos', valueFontSize: '14px' },
           ].map((card) => (

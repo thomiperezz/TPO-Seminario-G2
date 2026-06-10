@@ -26,6 +26,9 @@
   /* Bordes */
   --color-border: #E5E7EB;
 
+  /* header button */
+  --color-header-btn-bg: #1D9E75;
+
   /* Tipografía y espaciado */
   --font-family: 'Inter', 'Roboto', sans-serif;
   --border-radius: 8px;
@@ -99,7 +102,7 @@
   padding: 7px 14px;
   border-radius: 8px;
   border: none;
-  background: #1D9E75;
+  background: var(--color-header-btn-bg);
   color: #fff;
   font-size: 13px;
   cursor: pointer;
@@ -316,8 +319,8 @@ body {
 
 /* Botón agregar curso (reemplaza el texto de bienvenida) */
 .add-course-btn {
-  background-color: var(--color-warning);
-  color: var(--color-text);
+  background-color: var(--color-header-btn-bg);
+  color: #fff;
   border: none;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;

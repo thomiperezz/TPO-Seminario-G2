@@ -69,7 +69,7 @@ const NuevoCurso = () => {
             <div style={{ fontSize: '12px', color: '#666', marginBottom: '14px' }}>Se aplicarán a todas las entregas del curso. Podés modificarlos por actividad.</div>
             {[
               { key: 'codigoCopiado', label: 'Detectar código copiado sin modificaciones', sub: 'Señala fragmentos idénticos a fuentes externas o entre alumnos' },
-              { key: 'explicacionesGenericas', label: 'Identificar explicaciones genéricas', sub: 'Alerta cuando la justificación carece de especificidad técnica' },
+              { key: 'explicacionesGenericas', label: 'Identificar explicaciones genéricas', sub: 'Notifica cuando la justificación carece de especificidad técnica' },
               { key: 'erroresConceptuales', label: 'Detectar errores conceptuales', sub: 'Compara con conceptos esperados para el nivel' },
               { key: 'cambiosComplejidad', label: 'Detectar cambios abruptos de complejidad', sub: 'Señala inconsistencias en el nivel técnico del trabajo' },
               { key: 'preguntasAutomaticas', label: 'Generar preguntas de repaso automáticamente', sub: 'Crea preguntas a partir de cada entrega recibida' },

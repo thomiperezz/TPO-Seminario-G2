@@ -50,7 +50,7 @@ const DetalleCurso = () => {
           {[
             { title: 'Alumnos', value: '28', description: '2 sin entregas recientes' },
             { title: 'Actividades activas', value: '3', description: '1 con entrega esta semana' },
-            { title: 'Alertas pedagógicas', value: '6', description: 'En entregas recientes' },
+            { title: 'Notificaciones pedagógicas', value: '6', description: 'En entregas recientes' },
             { title: 'Nivel de comprensión', value: '61%', description: 'Promedio del curso' },
           ].map((card) => (
             <StatCard
