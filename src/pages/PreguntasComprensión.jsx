@@ -132,7 +132,7 @@ const PreguntasComprensión = () => {
                 type="text"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ingrese un prompt sobre un tema de matemática "
+                placeholder="Ingrese la consigna de la tarea original"
                 style={{
                   width: '95%',
                   padding: '10px',
@@ -210,7 +210,7 @@ const PreguntasComprensión = () => {
               color: '#6B7280'
             }}
           >
-            Ingresá un tema de matemática y generá preguntas.
+            Completa el formulario y generá preguntas de comprensión.
           </div>
         )}
         {loading && (
