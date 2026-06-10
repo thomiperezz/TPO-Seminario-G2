@@ -33,11 +33,11 @@ const DetalleCurso = () => {
       <main className='course-detail-main'>
         <NavRuta items={[
           { label: 'Cursos', ruta: '/course' },
-          { label: '3° B — Matemática' },
+          { label: '3° B — Informática' },
         ]} />
 
         <div className='course-detail-header'>
-          <h1 className='course-detail-title'>3° B — Matemática</h1>
+          <h1 className='course-detail-title'>3° B — Informática</h1>
           <button
             onClick={() => navigate('/nueva-actividad')}
             className='new-activity-btn'

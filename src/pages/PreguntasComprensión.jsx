@@ -23,6 +23,7 @@ const PreguntasComprensión = () => {
   const [questionCount, setQuestionCount] = useState(5);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [studentText, setStudentText] = useState('');
 
   const generateQuestions = async () => {
     if (!topic.trim()) {
@@ -33,16 +34,15 @@ const PreguntasComprensión = () => {
       setLoading(true);
 
       const response = await fetch(
-        'http://localhost:8080/api/evaluation/questions',
+        `http://localhost:8080/api/evaluation/questions?originalAssignment=${encodeURIComponent(
+          topic
+        )}&questionCount=${questionCount}`,
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain',
           },
-          body: JSON.stringify({
-            originalAssigment: topic,
-            questionCount,
-          }),
+          body: studentText,
         }
       );
 
@@ -84,16 +84,42 @@ const PreguntasComprensión = () => {
           }}
         >
           <div>
+            <div style={{ marginBottom: '16px' }}>
+              <label
+                style={{
+                  display: 'block',
+                  marginBottom: '6px', 
+                  fontWeight: '500',
+                }}
+              >
+                Texto del alumno:
+              </label>
 
+              <textarea
+                value={studentText}
+                onChange={(e) => setStudentText(e.target.value)}
+                rows={6}
+                placeholder="Pegá acá la resolución, explicación o trabajo del alumno..."
+                style={{
+                  width: '95%',
+                  padding: '10px',
+                  borderRadius: '8px',
+                  border: '1px solid #D1D5DB',
+                  resize: 'vertical',
+                  fontSize: '14px',
+                }}
+              />
+            </div>
+            
             <div style={{ flex: 1, marginBottom: '12px' }}>
-              <label>Tema: </label>
+              <label>Tarea original: </label>
               <input
                 type="text"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="Ingrese un prompt sobre un tema de matemática "
                 style={{
-                  width: '90%',
+                  width: '95%',
                   padding: '10px',
                   marginTop: '6px',
                   borderRadius: '8px',
@@ -103,15 +129,15 @@ const PreguntasComprensión = () => {
             </div>
 
             <div style={{ marginBottom: '12px' }}>
-              <label>Cantidad: </label>
+              <label>Cantidad de preguntas: </label>
               <input
                 type="number"
-                min="1"
-                max="20"
+                min="3"
+                max="10"
                 value={questionCount}
                 onChange={(e) => setQuestionCount(Number(e.target.value))}
                 style={{
-                  width: '10%',
+                  width: '6%',
                   padding: '10px',
                   marginTop: '6px',
                   borderRadius: '8px',
@@ -150,7 +176,7 @@ const PreguntasComprensión = () => {
         }}>
           <span style={{ fontSize: '18px' }}>ℹ️</span>
           <p style={{ margin: 0, fontSize: '13px', color: '#4B5563', lineHeight: '1.5' }}>
-            Preguntas generadas a partir del ensayo argumentativo. Podés usarlas en clase para validar la comprensión del alumno.
+            La IA generará preguntas orientadas a verificar la comprensión real de los conceptos trabajados por el alumno.
           </p>
         </div>
         <div style={{

@@ -58,21 +58,21 @@ const Dashboard = () => {
               icon="⚠️"
               type="error"
               title="Posible código copiado"
-              description="4° A - Lucas Rodríguez"
+              description="4° A TP Algoritmos - Lucas Rodríguez"
             />
 
             <ActivityItem
               icon="🔔"
               type="warning"
               title="Corrección pendiente"
-              description="3° B Matemática - María Gómez"
+              description="3° B Informática - María Gómez"
             />
 
             <ActivityItem
               icon="ℹ️"
               type="info"
               title="Nueva entrega"
-              description="5° C Matemática - Juan Pérez"
+              description="5° C Matemática Aplicada - Juan Pérez"
             />
 
           </div>
@@ -86,7 +86,7 @@ const Dashboard = () => {
 
             <CourseCard
               code="3° B"
-              name="Matemática"
+              name="Informática"
               info="32 alumnos"
               alerts="6 ⚠️"
               alertType="warning"
@@ -94,7 +94,7 @@ const Dashboard = () => {
 
             <CourseCard
               code="4° A"
-              name="Matemática"
+              name="Programación"
               info="28 alumnos"
               alerts="✅"
               alertType="success"

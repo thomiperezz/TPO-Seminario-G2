@@ -33,9 +33,9 @@ const AssistCorrection = () => {
 
   // Datos de ejemplo - Cursos
   const courses = [
-    { id: 'course-1', name: '3° B — Matemática' },
+    { id: 'course-1', name: '3° B — Informática' },
     { id: 'course-2', name: '3° A — Matemática' },
-    { id: 'course-3', name: '4° B — Matemática' }
+    { id: 'course-3', name: '4° B — Física' }
   ];
 
   // Datos de ejemplo - Alumnos
@@ -47,7 +47,7 @@ const AssistCorrection = () => {
 
   // Datos de ejemplo - Entregas
   const deliveries = [
-    { id: 'delivery-1', name: 'TP — Funciones' },
+    { id: 'delivery-1', name: 'TP — Algoritmos de ordenamiento' },
     { id: 'delivery-2', name: 'Trabajo práctico N° 1' },
     { id: 'delivery-3', name: 'Examen parcial' }
   ];

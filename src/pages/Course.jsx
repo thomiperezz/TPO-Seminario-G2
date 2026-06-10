@@ -9,14 +9,14 @@ const Course = () => {
   const courses = [
     {
       code: '3° B',
-      name: 'Matemática',
+      name: 'Informática',
       info: '32 alumnos',
       alerts: '6 ⚠️',
       alertType: 'warning'
     },
     {
       code: '4° A',
-      name: 'Matemática',
+      name: 'Programación',
       info: '28 alumnos',
       alerts: '✅',
       alertType: 'success'
@@ -30,7 +30,7 @@ const Course = () => {
     },
     {
       code: '6° A',
-      name: 'Matemática',
+      name: 'Base de Datos',
       info: '25 alumnos',
       alerts: '1 ⚠️',
       alertType: 'warning'
