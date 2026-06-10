@@ -15,8 +15,23 @@ const PreguntasComprensión = () => {
   const navigate = useNavigate();
 
   const handleExport = () => {
-    console.log("Exportar preguntas");
-    // Funcionalidad placeholder para el futuro
+    const contenido = questions
+      .map((question, index) => `${index + 1}. ${question}`)
+      .join('\n\n');
+
+    const blob = new Blob([contenido], { type: 'text/plain' });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'preguntas-comprension.txt';
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
   };
 
   const [topic, setTopic] = useState('');
