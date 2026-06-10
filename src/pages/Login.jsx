@@ -125,24 +125,14 @@ const Login = () => {
             style={{
               width: '100%',
               padding: '0.75rem',
-              backgroundColor: 'var(--color-accent)',
+              backgroundColor: '#059669',
               color: '#fff',
               border: 'none',
               borderRadius: '8px',
               fontSize: '0.95rem',
               fontWeight: '600',
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#059669';
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 8px 16px rgba(16, 185, 129, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = 'var(--color-accent)';
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = 'none';
+              transition: 'all 0.2s ease',
             }}
           >
             Ingresar
