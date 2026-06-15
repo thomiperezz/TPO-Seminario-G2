@@ -52,27 +52,79 @@ const AssistCorrection = () => {
     { id: 'delivery-3', name: 'Examen parcial' }
   ];
 
-  // Retroalimentación de IA - Array de observaciones
-  const feedbackItems = [
-    {
-      id: 'feedback-1',
-      category: 'generic',
-      title: 'EXPLICACIÓN GENÉRICA',
-      text: 'La explicación escrita tiene un nivel técnico muy superior al resto del trabajo. Probablemente fue copiada de una fuente externa sin comprensión real.'
-    },
-    {
-      id: 'feedback-2',
-      category: 'complexity',
-      title: 'CAMBIO DE COMPLEJIDAD',
-      text: 'La afirmación "funciona bien para listas pequeñas" es informal y contrasta con la explicación técnica anterior. Sugiere que distintas partes fueron escritas por separado.'
-    },
-    {
-      id: 'feedback-3',
-      category: 'error',
-      title: 'ERROR CONCEPTUAL',
-      text: 'Bubble sort no es el algoritmo más eficiente para ordenar datos porque hace comparaciones de a dos elementos. Vale la pena preguntar al alumno si conoce alternativas.'
+  const workName = 'TP — Algoritmos de ordenamiento';
+
+  const submittedWork = `
+    def bubble_sort(lista):
+        n = len(lista)
+
+        for i in range(n):
+            for j in range(0, n-1):
+                if lista[j] > lista[j+1]:
+                    lista[j], lista[j+1] = lista[j+1], lista[j]
+
+        return lista
+    `;
+
+  const explanation = `
+    El algoritmo de ordenamiento burbuja es un método de clasificación simple que funciona
+    comparando repetidamente elementos adyacentes e intercambiándolos si están en el orden incorrecto,
+    con una complejidad temporal de O(n²) en el peor caso.
+    `;
+  
+  const [observations, setObservations] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const generateObservations = async () => {
+    try {
+      const activeParameters = [];
+      setLoading(true);
+
+      if (showCopiedCode) {
+        activeParameters.push('Código copiado');
+      }
+
+      if (showGenericExplanations) {
+        activeParameters.push('Explicaciones genéricas');
+      }
+
+      if (showConceptualErrors) {
+        activeParameters.push('Errores conceptuales');
+      }
+
+      const response = await fetch(
+        'http://localhost:8080/api/evaluation/observations',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            workName,
+            submittedWork,
+            explanation,
+            activeParameters,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      const formattedObservations = Object.entries(
+        data.observations || {}
+      ).map(([type, text], index) => ({
+        id: `obs-${index}`,
+        title: type.toUpperCase(),
+        text,
+        category: 'info',
+      }));
+
+      setObservations(formattedObservations);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
     }
-  ];
+  };
 
   // Manejador para cuando el usuario marca un feedback como útil
   const handleUseful = (feedbackId) => {
@@ -188,11 +240,9 @@ const AssistCorrection = () => {
         <div className="assist-correction-main">
           {/* Columna Izquierda - Código y Explicación */}
           <CodeViewer
-            header="TP — Algoritmos de ordenamiento · Entrega final · Hace 1 día"
+            header={workName}
             explanationTitle="Explicación"
-            explanationText="El algoritmo de ordenamiento burbuja es un método de clasificación simple que funciona
-                comparando repetidamente elementos adyacentes e intercambiándolos si están en el orden incorrecto,
-                con una complejidad temporal de O(n²) en el peor caso."
+            explanationText={explanation}
             explanationLinks={[
               {
                 text: 'Es el algoritmo más eficiente para ordenar datos',
@@ -235,19 +285,6 @@ const AssistCorrection = () => {
           <div className="observations-panel">
             <h3 className="observations-title">Observaciones de la IA</h3>
 
-            {/* Tarjetas de feedback */}
-            {feedbackItems.map((feedback) => (
-              <FeedbackCard
-                key={feedback.id}
-                id={feedback.id}
-                category={feedback.category}
-                title={feedback.title}
-                text={feedback.text}
-                onUseful={handleUseful}
-                onDismiss={handleDismiss}
-              />
-            ))}
-
             {/* Parámetros activos */}
             <ActiveParameters
               parameters={[
@@ -271,6 +308,37 @@ const AssistCorrection = () => {
                 }
               ]}
             />
+
+            <button
+              className="add-course-btn"
+              onClick={generateObservations}
+              disabled={loading}
+            >
+              {loading ? 'Generando...' : 'Generar observaciones'}
+            </button>
+
+            {/* Tarjetas de feedback */}
+            {!loading && observations.length === 0 && (
+              <div className="no-content-placeholder">
+                Selecciona parámetros y generá observaciones con IA.
+              </div>
+            )}
+            {loading && (
+              <div className="no-content-placeholder">
+                Generando observaciones con IA...
+              </div>
+            )}
+            {observations.map((feedback) => (
+              <FeedbackCard
+                key={feedback.id}
+                id={feedback.id}
+                category={feedback.title === "ERRORES CONCEPTUALES" ? "error" : "complexity"}
+                title={feedback.title}
+                text={feedback.text}
+                onUseful={handleUseful}
+                onDismiss={handleDismiss}
+              />
+            ))}
           </div>
         </div>
       </main>

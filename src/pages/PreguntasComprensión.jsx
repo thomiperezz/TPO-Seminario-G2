@@ -42,7 +42,7 @@ const PreguntasComprensión = () => {
 
   const generateQuestions = async () => {
     if (!topic.trim()) {
-      alert('Ingresá un tema');
+      alert('Ingresá la consigna de la tarea original para generar las preguntas.');
       return;
     }
     try {
@@ -200,28 +200,12 @@ const PreguntasComprensión = () => {
           }} />
         {/* Lista de Tarjetas de Preguntas */}
         {!loading && questions.length === 0 && (
-          <div
-            style={{
-              background: '#fff',
-              border: '1px dashed #D1D5DB',
-              borderRadius: '12px',
-              padding: '32px',
-              textAlign: 'center',
-              color: '#6B7280'
-            }}
-          >
+          <div className='no-content-placeholder'>
             Completa el formulario y generá preguntas de comprensión.
           </div>
         )}
         {loading && (
-          <div
-            style={{
-              background: '#fff',
-              borderRadius: '12px',
-              padding: '24px',
-              textAlign: 'center'
-            }}
-          >
+          <div className='no-content-placeholder'>
             Generando preguntas con IA...
           </div>
         )}
