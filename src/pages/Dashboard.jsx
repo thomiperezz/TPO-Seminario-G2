@@ -9,7 +9,7 @@ const Dashboard = () => {
   return (
     <MainLayout>
       <Header
-        title="Dashboard"
+        title="Vista General"
         subtitle="Resumen general de actividad docente"
         /*actionText="Agregar curso"
         onAction={() => console.log('Agregar curso')}*/

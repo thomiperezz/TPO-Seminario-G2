@@ -43,14 +43,16 @@
 .main-content {
   flex: 1;
   padding: 2rem;
-  background: #F9FAFB;
+  background: linear-gradient(180deg, #f8fafc 0%, #f9fafb 100%);
   min-height: 100vh;
 }
 
 .app-header {
-  padding: 1rem;
-  background-color: #fff;
-  box-shadow: var(--shadow-sm);
+  padding: 1rem 1.25rem;
+  background: linear-gradient(90deg, #ffffff 0%, #f8fffb 100%);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -162,9 +164,17 @@ body {
 
 /* Tarjetas de estadísticas */
 .stat-card {
-  background-color: var(--color-panel);
-  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
   padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
 .stat-card-title {
@@ -191,7 +201,7 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
@@ -204,8 +214,8 @@ body {
 /* Grid principal - 2 columnas */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -216,16 +226,16 @@ body {
 
 /* Tarjetas genéricas */
 .card {
-  background-color: var(--color-panel);
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
   padding: 1.5rem;
   border: 1px solid var(--color-border);
 }
 
 .card-title {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text);
   margin: 0 0 1rem 0;
 }
@@ -241,18 +251,18 @@ body {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  border-radius: 8px;
-  background-color: var(--color-);
+  border-radius: 12px;
+  background-color: #fff;
   border: 1px solid var(--color-border);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .activity-item:hover {
-  background-color: var(--color-bg);
+  background-color: #f9fafb;
   border-color: var(--color-accent);
   transform: translateX(4px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
 }
 
 .activity-icon {
@@ -302,19 +312,19 @@ body {
 }
 
 .course-card {
-  padding: 1.25rem;
-  border-radius: 8px;
-  background-color: var(--color-bg);
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
   border: 1px solid var(--color-border);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .course-card:hover {
-  background-color: var(--color-bg);
+  background: #f9fafb;
   border-color: var(--color-accent);
-  transform: translateX(4px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
 }
 
 /* Botón agregar curso (reemplaza el texto de bienvenida) */
@@ -376,10 +386,12 @@ body {
 .course-alerts {
   font-size: 0.75rem;
   margin-top: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
   width: fit-content;
-  font-weight: 600;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
 }
 
 .course-alerts.error {
@@ -415,6 +427,10 @@ body {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-logo-link {
+  text-decoration: none;
 }
 
 .sidebar-logo {

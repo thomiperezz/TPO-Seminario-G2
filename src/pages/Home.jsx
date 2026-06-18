@@ -33,7 +33,7 @@ function Home() {
             <Link to="/login" className="home-btn home-btn-primary">
               Iniciar sesión
             </Link>
-            <Link to="/login" className="home-btn home-btn-secondary">
+            <Link to="/registro" className="home-btn home-btn-secondary">
               Registrarse
             </Link>
           </div>
