@@ -6,10 +6,12 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <h1 className="sidebar-logo">
-        <span style={{ color: 'rgb(5, 150, 105)' }}>acompaña</span>
-        <span style={{ color: '#000000' }}>educa</span> 
-      </h1>
+        <NavLink to="/dashboard" className="sidebar-logo-link">
+          <h1 className="sidebar-logo">
+            <span style={{ color: 'rgb(5, 150, 105)' }}>acompaña</span>
+            <span style={{ color: '#000000' }}>educa</span>
+          </h1>
+        </NavLink>
       </div>
       <p className="sidebar-menu-label">Menú</p>
       <nav className="sidebar-nav">

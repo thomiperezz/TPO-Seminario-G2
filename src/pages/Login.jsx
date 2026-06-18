@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../assets/styles/global.css';
 
 const Login = () => {
@@ -30,17 +30,26 @@ const Login = () => {
         maxWidth: '400px',
         border: '1px solid #E5E7EB'
       }}>
-        <h1 style={{
-          fontSize: '1.8rem',
-          fontWeight: '700',
-          color: 'var(--color-text)',
-          marginTop: 0,
-          marginBottom: '0.5rem',
-          textAlign: 'center'
-        }}>
-          <span style={{ color: 'rgb(5,150,105)' }}>acompaña</span>
-          <span>educa</span>
-        </h1>
+        <Link
+          to="/dashboard"
+          style={{
+            textDecoration: 'none',
+            display: 'block',
+            textAlign: 'center',
+            marginTop: 0,
+            marginBottom: '0.5rem'
+          }}
+        >
+          <h1 style={{
+            fontSize: '1.8rem',
+            fontWeight: '700',
+            color: 'var(--color-text)',
+            margin: 0
+          }}>
+            <span style={{ color: 'rgb(5,150,105)' }}>acompaña</span>
+            <span>educa</span>
+          </h1>
+        </Link>
         <p style={{
           fontSize: '0.875rem',
           color: 'var(--color-text-secondary)',
