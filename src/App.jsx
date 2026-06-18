@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Registro from "./pages/Registro";
 import Course from './pages/Course';
 import DetalleCurso from './pages/DetalleCurso';
 import NuevoCurso from './pages/NuevoCurso';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/assistcorrection" element={<AssistCorrection />} />
         <Route path="/preguntas-comprensión" element={<PreguntasComprensión />} />
         <Route path="/" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
         <Route path="/detalle-curso" element={<DetalleCurso />} />
         <Route path="/nuevo-curso" element={<NuevoCurso />} />
         <Route path="/nueva-actividad" element={<NuevaActividad />} />

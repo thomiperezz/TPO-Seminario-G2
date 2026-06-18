@@ -86,6 +86,44 @@ const NuevaActividad = () => {
             ))}
           </div>
 
+          <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', marginBottom: '20px', border: '1px solid #E5E7EB', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)' }}>
+            <div style={{ fontSize: '14px', fontWeight: '600', color: '#111827', marginBottom: '14px' }}>Puntos de aprobación</div>
+            <div style={{ fontSize: '12px', color: '#666', marginBottom: '16px' }}>Define los criterios de aprobación para cada parte de la consigna.</div>
+            {[
+              { id: 'punto1', nombre: 'Funcionamiento del código', puntos: 40 },
+              { id: 'punto2', nombre: 'Estructura y organización', puntos: 25 },
+              { id: 'punto3', nombre: 'Documentación y comentarios', puntos: 20 },
+              { id: 'punto4', nombre: 'Entrega a tiempo', puntos: 15 },
+            ].map((punto, i, arr) => (
+              <div key={punto.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: i < arr.length - 1 ? '0.5px solid #E5E7EB' : 'none' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '13px', fontWeight: '500', color: '#111827' }}>{punto.nombre}</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <input
+                    type="number"
+                    defaultValue={punto.puntos}
+                    min="0"
+                    max="100"
+                    style={{
+                      width: '60px',
+                      padding: '6px 8px',
+                      borderRadius: '6px',
+                      border: '1px solid #D1D5DB',
+                      fontSize: '12px',
+                      textAlign: 'center'
+                    }}
+                  />
+                  <span style={{ fontSize: '12px', color: '#6B7280', minWidth: '30px' }}>puntos</span>
+                </div>
+              </div>
+            ))}
+            <div style={{ marginTop: '14px', padding: '12px', background: '#F3F4F6', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '13px', fontWeight: '600', color: '#111827' }}>Total:</span>
+              <span style={{ fontSize: '16px', fontWeight: '700', color: '#059669' }}>100 puntos</span>
+            </div>
+          </div>
+
           <div style={{ display: 'flex', gap: '8px' }}>
             <button onClick={() => navigate('/detalle-curso')} style={{ padding: '7px 14px', borderRadius: '8px', border: '0.5px solid #ccc', background: '#fff', fontSize: '13px', cursor: 'pointer' }}>Cancelar</button>
             <button onClick={() => navigate('/detalle-curso')} style={{ padding: '7px 14px', borderRadius: '8px', border: 'none', background: '#1D9E75', color: '#fff', fontSize: '13px', cursor: 'pointer', fontWeight: '500' }}>✓ Crear actividad</button>

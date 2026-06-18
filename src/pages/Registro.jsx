@@ -1,0 +1,247 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../assets/styles/global.css';
+
+const Registro = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Las contraseñas deben coincidir');
+      return;
+    }
+    // Aquí se puede integrar la lógica de registro real.
+    navigate('/dashboard');
+  };
+
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      backgroundColor: 'var(--color-bg)'
+    }}>
+      <div style={{
+        backgroundColor: 'var(--color-panel)',
+        borderRadius: '12px',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+        padding: '2.5rem',
+        width: '100%',
+        maxWidth: '450px',
+        border: '1px solid #E5E7EB'
+      }}>
+        <h1 style={{
+          fontSize: '1.8rem',
+          fontWeight: '700',
+          color: 'var(--color-text)',
+          marginTop: 0,
+          marginBottom: '0.5rem',
+          textAlign: 'center'
+        }}>
+          <span style={{ color: 'rgb(5,150,105)' }}>acompaña</span>
+          <span>educa</span>
+        </h1>
+        <p style={{
+          fontSize: '0.875rem',
+          color: 'var(--color-text-secondary)',
+          textAlign: 'center',
+          marginBottom: '2rem',
+          margin: '0 0 2rem 0'
+        }}>
+          Crea tu cuenta para comenzar a gestionar tus cursos y actividades.
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <div style={{
+            marginBottom: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem'
+          }}>
+            <label style={{
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              color: 'var(--color-text)'
+            }}>Nombre completo:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Tu nombre completo"
+              style={{
+                padding: '0.75rem',
+                border: '1px solid #D1D5DB',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontFamily: 'var(--font-family)',
+                transition: 'all 0.2s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = 'var(--color-accent)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#D1D5DB';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+
+          <div style={{
+            marginBottom: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem'
+          }}>
+            <label style={{
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              color: 'var(--color-text)'
+            }}>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="ejemplo@correo.com"
+              style={{
+                padding: '0.75rem',
+                border: '1px solid #D1D5DB',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontFamily: 'var(--font-family)',
+                transition: 'all 0.2s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = 'var(--color-accent)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#D1D5DB';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+
+          <div style={{
+            marginBottom: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem'
+          }}>
+            <label style={{
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              color: 'var(--color-text)'
+            }}>Contraseña:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="********"
+              style={{
+                padding: '0.75rem',
+                border: '1px solid #D1D5DB',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontFamily: 'var(--font-family)',
+                transition: 'all 0.2s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = 'var(--color-accent)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#D1D5DB';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+
+          <div style={{
+            marginBottom: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem'
+          }}>
+            <label style={{
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              color: 'var(--color-text)'
+            }}>Confirmar contraseña:</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Repite tu contraseña"
+              style={{
+                padding: '0.75rem',
+                border: '1px solid #D1D5DB',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontFamily: 'var(--font-family)',
+                transition: 'all 0.2s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = 'var(--color-accent)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#D1D5DB';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              backgroundColor: '#059669',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            Crear cuenta
+          </button>
+        </form>
+
+        <p style={{
+          marginTop: '1rem',
+          fontSize: '0.9rem',
+          textAlign: 'center',
+          color: 'var(--color-text-secondary)'
+        }}>
+          ¿Ya tienes cuenta?{' '}
+          <span
+            onClick={() => navigate('/')}
+            style={{
+              color: 'var(--color-primary)',
+              cursor: 'pointer',
+              fontWeight: '700'
+            }}
+          >
+            Inicia sesión
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Registro;
