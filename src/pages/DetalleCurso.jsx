@@ -1,6 +1,6 @@
 //import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Sidebar from '../components/navigation/Sidebar';
 import NavRuta from '../components/navigation/NavRuta';
@@ -14,6 +14,17 @@ import DetectedPatterns from '../components/course/DetectedPatterns';
 
 const DetalleCurso = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const course = location.state?.course || {
+    code: '3° B',
+    name: 'Informática',
+    info: '32 alumnos',
+    alerts: '6 ⚠️',
+    alertType: 'warning'
+  };
+
+  const courseLabel = `${course.code} — ${course.name}`;
 
   const alumnos = [
     { iniciales: 'MG', nombre: 'Martina García', ultima: 'hace 2h', alertas: 1, tipo: 'amarillo', textoInsignia: '1 ⚠️', bg: '#E6F1FB', color: '#185FA5' },
@@ -55,11 +66,11 @@ const DetalleCurso = () => {
       <main className='course-detail-main'>
         <NavRuta items={[
           { label: 'Cursos', ruta: '/course' },
-          { label: '3° B — Informática' },
+          { label: courseLabel },
         ]} />
 
         <div className='course-detail-header'>
-          <h1 className='course-detail-title'>3° B — Informática</h1>
+          <h1 className='course-detail-title'>{courseLabel}</h1>
           <button
             onClick={() => navigate('/nueva-actividad')}
             className='new-activity-btn'

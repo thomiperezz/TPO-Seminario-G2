@@ -1,7 +1,7 @@
 export const menuItems = [
   {
     key: 'dashboard',
-    label: 'Dashboard',
+    label: 'Vista General',
     path: '/dashboard',
   },
   {
@@ -18,10 +18,5 @@ export const menuItems = [
     key: 'checkquestions',
     label: 'Preguntas de comprensión',
     path: '/preguntas-comprensión',
-  },
-  {
-    key: 'exit',
-    label: 'Salir  📤',
-    path: '/',
-  },
+  }
 ];

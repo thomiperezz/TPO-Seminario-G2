@@ -55,8 +55,9 @@
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 2rem;
+  gap: 1rem;
 }
 
 .app-header-title {
@@ -311,6 +312,83 @@ body {
   gap: 1rem;
 }
 
+.delete-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.delete-modal {
+  width: min(420px, 90vw);
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  text-align: center;
+}
+
+.delete-modal-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.delete-modal-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.delete-modal-text {
+  margin: 10px 0 18px;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.delete-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.delete-modal-button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.delete-modal-button:hover {
+  transform: translateY(-1px);
+}
+
+.delete-modal-button--cancel {
+  background: #eef2ff;
+  color: #1e3a8a;
+}
+
+.delete-modal-button--confirm {
+  background: #dc2626;
+  color: #fff;
+}
+
 .course-card {
   padding: 1rem 1.1rem;
   border-radius: 12px;
@@ -325,6 +403,49 @@ body {
   border-color: var(--color-accent);
   transform: translateY(-1px);
   box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
+}
+
+.course-card-content {
+  flex: 1;
+}
+
+.course-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.course-delete-btn {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.course-delete-btn:hover {
+  background: #fff1f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.course-delete-icon {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.course-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.65rem;
 }
 
 /* Botón agregar curso (reemplaza el texto de bienvenida) */

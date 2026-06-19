@@ -5,6 +5,7 @@ const TopBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState(null);
   const menuRef = useRef(null);
 
   const publicRoutes = ['/', '/login', '/registro', '/recuperar-contrasena'];
@@ -92,74 +93,39 @@ const TopBar = () => {
             zIndex: 1000,
             overflow: 'hidden'
           }}>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                width: '100%',
-                border: 'none',
-                background: 'transparent',
-                padding: '0.72rem 0.9rem',
-                textAlign: 'left',
-                cursor: 'pointer',
-                color: '#111827',
-                fontWeight: '600',
-                fontSize: '0.9rem'
-              }}
-            >
-              Mi perfil
-            </button>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                width: '100%',
-                border: 'none',
-                background: 'transparent',
-                padding: '0.72rem 0.9rem',
-                textAlign: 'left',
-                cursor: 'pointer',
-                color: '#111827',
-                fontWeight: '600',
-                fontSize: '0.9rem'
-              }}
-            >
-              Configuración
-            </button>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                width: '100%',
-                border: 'none',
-                background: 'transparent',
-                padding: '0.72rem 0.9rem',
-                textAlign: 'left',
-                cursor: 'pointer',
-                color: '#111827',
-                fontWeight: '600',
-                fontSize: '0.9rem'
-              }}
-            >
-              Ayuda
-            </button>
-            <button
-              type="button"
-              onClick={handleLogout}
-              style={{
-                width: '100%',
-                border: 'none',
-                background: 'transparent',
-                padding: '0.72rem 0.9rem',
-                textAlign: 'left',
-                cursor: 'pointer',
-                color: '#DC2626',
-                fontWeight: '600',
-                fontSize: '0.9rem'
-              }}
-            >
-              Cerrar sesión
-            </button>
+            {[
+              { id: 'profile', label: 'Mi perfil', onClick: () => setMenuOpen(false), isDanger: false },
+              { id: 'settings', label: 'Configuración', onClick: () => setMenuOpen(false), isDanger: false },
+              { id: 'help', label: 'Ayuda', onClick: () => setMenuOpen(false), isDanger: false },
+              { id: 'logout', label: 'Cerrar sesión', onClick: handleLogout, isDanger: true }
+            ].map((item) => {
+              const isHovered = hoveredItem === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={item.onClick}
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    background: isHovered ? '#F9FAFB' : 'transparent',
+                    padding: '0.72rem 0.9rem',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    color: item.isDanger ? '#DC2626' : '#111827',
+                    fontWeight: '600',
+                    fontSize: '0.9rem',
+                    transform: isHovered ? 'translateX(4px)' : 'translateX(0)',
+                    transition: 'background-color 0.2s ease, transform 0.2s ease'
+                  }}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
