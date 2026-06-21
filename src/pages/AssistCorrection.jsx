@@ -26,6 +26,9 @@ const AssistCorrection = () => {
   const [selectedDelivery, setSelectedDelivery] = useState('delivery-1');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages] = useState(2);
+  const [textToCorrect, setTextToCorrect] = useState('');
+  const [corrections, setCorrections] = useState(null);
+  const [loadingCorrections, setLoadingCorrections] = useState(false);
 
   // Estados para parámetros activos
   const [showCopiedCode, setShowCopiedCode] = useState(true);
@@ -309,6 +312,32 @@ const AssistCorrection = () => {
       )
     );
   };
+
+  const generateCorrections = async () => {
+  if (!textToCorrect.trim()) {
+    alert('Ingresá un texto para corregir.');
+    return;
+  }
+
+  try {
+    setLoadingCorrections(true);
+    setCorrections(null);
+
+    const response = await fetch(`${API_BASE_URL}/api/evaluation/corrections`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: textToCorrect,
+    });
+
+    const data = await response.json();
+    setCorrections(data);
+  } catch (error) {
+    console.error(error);
+    alert('No se pudo generar la corrección. Intentalo nuevamente.');
+  } finally {
+    setLoadingCorrections(false);
+  }
+};
 
   const handleSaveCorrection = () => {
     const correctionData = {
@@ -766,6 +795,7 @@ const AssistCorrection = () => {
                   onDismiss={handleDismiss}
                 />
               ))}
+            {/* Recuadro de corrección de texto */}
           </div>
         </div>
       </main>

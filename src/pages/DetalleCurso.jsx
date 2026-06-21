@@ -81,7 +81,7 @@ const DetalleCurso = () => {
 
         <div className="stats-grid">
           {[
-            { title: 'Alumnos', value: '28', description: '2 sin entregas recientes' },
+            { title: 'Alumnos', value: '32', description: '2 sin entregas recientes' },
             { title: 'Actividades activas', value: '3', description: '1 con entrega esta semana' },
             { title: 'Notificaciones pedagógicas', value: '6', description: 'En entregas recientes' },
             { title: 'Nivel de comprensión', value: '61%', description: 'Promedio del curso' },
@@ -107,19 +107,9 @@ const DetalleCurso = () => {
             </div>
         </div>
 
-        <SectionHeader>Alumnos</SectionHeader>
-        <div className='card'>
-          {alumnos.map((alumno) => (
-            <StudentRow
-              key={alumno.nombre}
-              alumno={alumno}
-            />
-          ))}
-        </div>
-
         <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #E5E7EB', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)' }}>
           <div style={{ marginBottom: '18px' }}>
-            <div style={{ fontSize: '13px', color: '#6B7280' }}>Revisión rápida de entregas por estado</div>
+            <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#111827' }}>Actividades de Curso</div>
           </div>
 
           <div style={{ display: 'flex', gap: '8px', marginBottom: '18px', flexWrap: 'wrap' }}>

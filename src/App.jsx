@@ -11,6 +11,7 @@ import PerfilAlumno from './pages/PerfilAlumno';
 import AssistCorrection from './pages/AssistCorrection';
 import PreguntasComprensión from './pages/PreguntasComprensión';
 import RecuperarContrasena from './pages/RecuperarContrasena';
+import Alumnos from './pages/Alumnos';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path="/nuevo-curso" element={<NuevoCurso />} />
       <Route path="/nueva-actividad" element={<NuevaActividad />} />
       <Route path="/perfil-alumno" element={<PerfilAlumno />} />
+      <Route path="/alumnos" element={<Alumnos />} />
       <Route path="*" element={<Home />} />
     </Routes>
   );
