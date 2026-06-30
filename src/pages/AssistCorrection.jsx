@@ -26,9 +26,6 @@ const AssistCorrection = () => {
   const [selectedDelivery, setSelectedDelivery] = useState('delivery-1');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages] = useState(2);
-  const [textToCorrect, setTextToCorrect] = useState('');
-  const [corrections, setCorrections] = useState(null);
-  const [loadingCorrections, setLoadingCorrections] = useState(false);
 
   // Estados para parámetros activos
   const [showCopiedCode, setShowCopiedCode] = useState(true);
@@ -174,23 +171,13 @@ const AssistCorrection = () => {
     accent: profile.accent
   }));
 
-  const [workName, setWorkName] = useState('TP — Algoritmos de ordenamiento');
-  const [submittedWork, setSubmittedWork] = useState(`
-    def bubble_sort(lista):
-        n = len(lista)
-
-        for i in range(n):
-            for j in range(0, n-1):
-                if lista[j] > lista[j+1]:
-                    lista[j], lista[j+1] = lista[j+1], lista[j]
-
-        return lista
-    `);
-  const [explanation, setExplanation] = useState(`
-    El algoritmo de ordenamiento burbuja es un método de clasificación simple que funciona
-    comparando repetidamente elementos adyacentes e intercambiándolos si están en el orden incorrecto,
-    con una complejidad temporal de O(n²) en el peor caso.
-    `);
+  const [workName, setWorkName] = useState('');
+  const [submittedWork, setSubmittedWork] = useState('');
+  const [explanation, setExplanation] = useState('');
+  const [submissionLoaded, setSubmissionLoaded] = useState(false);
+  const [showLoadedContent, setShowLoadedContent] = useState(false);
+  const [loadingSubmission, setLoadingSubmission] = useState(false);
+  const [loadedWork, setLoadedWork] = useState(null);
   const [observations, setObservations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [finalComment, setFinalComment] = useState('');
@@ -198,11 +185,11 @@ const AssistCorrection = () => {
   const [savedStatus, setSavedStatus] = useState('');
 
   const selectedCourseData = courseProfiles[selectedCourse] || courseProfiles['course-1'];
-  const canGenerateObservations = workName.trim() && submittedWork.trim() && explanation.trim();
-  const usefulCount = observations.filter((obs) => obs.status === 'useful').length;
-  const dismissedCount = observations.filter((obs) => obs.status === 'dismissed').length;
   const currentStudent = selectedCourseData.students.find((student) => student.id === selectedStudent) || selectedCourseData.students[0];
   const currentDelivery = selectedCourseData.deliveries.find((delivery) => delivery.id === selectedDelivery) || selectedCourseData.deliveries[0];
+  const canGenerateObservations = submissionLoaded && workName.trim() && submittedWork.trim() && explanation.trim();
+  const usefulCount = observations.filter((obs) => obs.status === 'useful').length;
+  const dismissedCount = observations.filter((obs) => obs.status === 'dismissed').length;
 
   useEffect(() => {
     if (!selectedCourseData.students.some((student) => student.id === selectedStudent)) {
@@ -213,14 +200,6 @@ const AssistCorrection = () => {
       setSelectedDelivery(selectedCourseData.deliveries[0]?.id || 'delivery-1');
     }
   }, [selectedCourse, selectedCourseData, selectedStudent, selectedDelivery]);
-
-  useEffect(() => {
-    if (currentDelivery) {
-      setWorkName(currentDelivery.name);
-      setSubmittedWork(currentDelivery.submittedWork);
-      setExplanation(currentDelivery.explanation);
-    }
-  }, [currentDelivery]);
 
   const generateObservations = async () => {
     if (!canGenerateObservations) {
@@ -313,31 +292,49 @@ const AssistCorrection = () => {
     );
   };
 
-  const generateCorrections = async () => {
-  if (!textToCorrect.trim()) {
-    alert('Ingresá un texto para corregir.');
-    return;
-  }
+  const handleLoadSubmission = async () => {
+    try {
+      setLoadingSubmission(true);
+      setShowLoadedContent(false);
+      setSavedStatus('');
+      setObservations([]);
 
-  try {
-    setLoadingCorrections(true);
-    setCorrections(null);
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/student-work`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          courseId: selectedCourse,
+          studentId: selectedStudent,
+          deliveryId: selectedDelivery,
+        }),
+      });
 
-    const response = await fetch(`${API_BASE_URL}/api/evaluation/corrections`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: textToCorrect,
-    });
+      if (!response.ok) {
+        throw new Error('Error al obtener la entrega');
+      }
 
-    const data = await response.json();
-    setCorrections(data);
-  } catch (error) {
-    console.error(error);
-    alert('No se pudo generar la corrección. Intentalo nuevamente.');
-  } finally {
-    setLoadingCorrections(false);
-  }
-};
+      const data = await response.json();
+      const submissionPayload = {
+        workName: data.workName || data.title || data.name || currentDelivery?.name || '',
+        submittedWork: data.submittedWork || data.code || data.content || data.answer || '',
+        explanation: data.explanation || data.studentExplanation || data.comments || data.observations || '',
+      };
+
+      setLoadedWork(data);
+      setWorkName(submissionPayload.workName);
+      setSubmittedWork(submissionPayload.submittedWork);
+      setExplanation(submissionPayload.explanation);
+      setSubmissionLoaded(true);
+      setShowLoadedContent(true);
+    } catch (error) {
+      console.error(error);
+      alert('No se pudo cargar la entrega.');
+    } finally {
+      setLoadingSubmission(false);
+    }
+  };
 
   const handleSaveCorrection = () => {
     const correctionData = {
@@ -419,7 +416,15 @@ const AssistCorrection = () => {
             <select
               className="control-select"
               value={selectedCourse}
-              onChange={(e) => setSelectedCourse(e.target.value)}
+              onChange={(e) => {
+                setSelectedCourse(e.target.value);
+                setSubmissionLoaded(false);
+                setShowLoadedContent(false);
+                setWorkName('');
+                setSubmittedWork('');
+                setExplanation('');
+                setLoadedWork(null);
+              }}
             >
               {courses.map((course) => (
                 <option key={course.id} value={course.id}>
@@ -434,7 +439,15 @@ const AssistCorrection = () => {
             <select
               className="control-select"
               value={selectedStudent}
-              onChange={(e) => setSelectedStudent(e.target.value)}
+              onChange={(e) => {
+                setSelectedStudent(e.target.value);
+                setSubmissionLoaded(false);
+                setShowLoadedContent(false);
+                setWorkName('');
+                setSubmittedWork('');
+                setExplanation('');
+                setLoadedWork(null);
+              }}
             >
               {selectedCourseData.students.map((student) => (
                 <option key={student.id} value={student.id}>
@@ -449,7 +462,15 @@ const AssistCorrection = () => {
             <select
               className="control-select"
               value={selectedDelivery}
-              onChange={(e) => setSelectedDelivery(e.target.value)}
+              onChange={(e) => {
+                setSelectedDelivery(e.target.value);
+                setSubmissionLoaded(false);
+                setShowLoadedContent(false);
+                setWorkName('');
+                setSubmittedWork('');
+                setExplanation('');
+                setLoadedWork(null);
+              }}
             >
               {selectedCourseData.deliveries.map((delivery) => (
                 <option key={delivery.id} value={delivery.id}>
@@ -458,6 +479,15 @@ const AssistCorrection = () => {
               ))}
             </select>
           </div>
+
+          <button
+            className="add-course-btn"
+            onClick={handleLoadSubmission}
+            disabled={loadingSubmission}
+            style={{ marginLeft: '8px' }}
+          >
+            {loadingSubmission ? 'Cargando...' : 'Cargar trabajo'}
+          </button>
 
           {/* Indicador de página */}
           <div className="page-indicator" style={{ marginLeft: 'auto' }}>
@@ -516,102 +546,105 @@ const AssistCorrection = () => {
 
         {/* Contenido Principal */}
         <div className="assist-correction-main">
-          {/* Columna Izquierda - Datos editables y código del alumno */}
+          {/* Columna Izquierda - Trabajo del alumno cargado dinámicamente */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div
-              style={{
-                background: '#fff',
-                border: '1px solid #E5E7EB',
-                borderRadius: '12px',
-                padding: '18px',
-                boxShadow: '0 1px 3px rgba(15, 23, 42, 0.06)'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div>
-                  <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: '600' }}>Entrega seleccionada</div>
-                  <div style={{ fontSize: '16px', fontWeight: '700', color: '#111827' }}>{currentDelivery.name}</div>
-                </div>
-                <span
+            {showLoadedContent ? (
+              <>
+                <div
                   style={{
-                    background: selectedCourseData.accent,
-                    color: '#fff',
-                    borderRadius: '999px',
-                    padding: '6px 10px',
-                    fontSize: '12px',
-                    fontWeight: '600'
+                    background: '#fff',
+                    border: '1px solid #E5E7EB',
+                    borderRadius: '12px',
+                    padding: '18px',
+                    boxShadow: '0 1px 3px rgba(15, 23, 42, 0.06)'
                   }}
                 >
-                  {selectedCourseData.subject}
-                </span>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <div>
+                      <div style={{ fontSize: '12px', color: '#6B7280', fontWeight: '600' }}>Entrega seleccionada</div>
+                      <div style={{ fontSize: '16px', fontWeight: '700', color: '#111827' }}>{currentDelivery.name}</div>
+                    </div>
+                    <span
+                      style={{
+                        background: selectedCourseData.accent,
+                        color: '#fff',
+                        borderRadius: '999px',
+                        padding: '6px 10px',
+                        fontSize: '12px',
+                        fontWeight: '600'
+                      }}
+                    >
+                      {selectedCourseData.subject}
+                    </span>
+                  </div>
+
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+                    Nombre de la actividad
+                  </label>
+                  <input
+                    type="text"
+                    value={workName}
+                    onChange={(e) => setWorkName(e.target.value)}
+                    style={{
+                      width: '95%',
+                      padding: '10px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #D1D5DB',
+                      marginBottom: '12px'
+                    }}
+                  />
+
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+                    Código entregado por el alumno
+                  </label>
+                  <textarea
+                    value={submittedWork}
+                    onChange={(e) => setSubmittedWork(e.target.value)}
+                    rows={10}
+                    style={{
+                      width: '95%',
+                      padding: '12px',
+                      borderRadius: '8px',
+                      border: '1px solid #D1D5DB',
+                      resize: 'vertical',
+                      fontFamily: 'monospace',
+                      marginBottom: '12px'
+                    }}
+                  />
+
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+                    Explicación del alumno
+                  </label>
+                  <textarea
+                    value={explanation}
+                    onChange={(e) => setExplanation(e.target.value)}
+                    rows={5}
+                    style={{
+                      width: '95%',
+                      padding: '12px',
+                      borderRadius: '8px',
+                      border: '1px solid #D1D5DB',
+                      resize: 'vertical'
+                    }}
+                  />
+                </div>
+              </>
+            ) : (
+              <div
+                style={{
+                  background: '#fff',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  boxShadow: '0 1px 3px rgba(15, 23, 42, 0.06)',
+                  textAlign: 'center',
+                  color: '#6B7280'
+                }}
+              >
+                <h3 style={{ marginBottom: '8px', color: '#111827' }}>Sin trabajo cargado</h3>
+                <p style={{ margin: 0 }}>Seleccioná curso, alumno y entrega y presioná el botón para cargar la entrega desde el backend.</p>
               </div>
-
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
-                Nombre de la actividad
-              </label>
-              <input
-                type="text"
-                value={workName}
-                onChange={(e) => setWorkName(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '10px 12px',
-                  borderRadius: '8px',
-                  border: '1px solid #D1D5DB',
-                  marginBottom: '12px'
-                }}
-              />
-
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
-                Código entregado por el alumno
-              </label>
-              <textarea
-                value={submittedWork}
-                onChange={(e) => setSubmittedWork(e.target.value)}
-                rows={10}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  border: '1px solid #D1D5DB',
-                  resize: 'vertical',
-                  fontFamily: 'monospace',
-                  marginBottom: '12px'
-                }}
-              />
-
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
-                Explicación del alumno
-              </label>
-              <textarea
-                value={explanation}
-                onChange={(e) => setExplanation(e.target.value)}
-                rows={5}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  border: '1px solid #D1D5DB',
-                  resize: 'vertical'
-                }}
-              />
-            </div>
-
-            <CodeViewer
-              header={workName}
-              explanationTitle="Explicación"
-              explanationText={explanation}
-              explanationLinks={[
-                {
-                  text: 'Es el algoritmo más eficiente para ordenar datos',
-                  suffix: 'porque hace comparaciones de a dos elementos.',
-                  onClick: () =>
-                    console.log('Ver alternativas de algoritmos más eficientes')
-                }
-              ]}
-            >
-              {submittedWork}
-            </CodeViewer>
+            )}
           </div>
 
           {/* Columna Derecha - Observaciones de la IA */}
