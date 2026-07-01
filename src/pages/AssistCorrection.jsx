@@ -633,16 +633,15 @@ const AssistCorrection = () => {
               <div
                 style={{
                   background: '#fff',
-                  border: '1px solid #E5E7EB',
+                  border: '1px dashed #E5E7EB',
                   borderRadius: '12px',
-                  padding: '24px',
+                  padding: '204px 24px',
                   boxShadow: '0 1px 3px rgba(15, 23, 42, 0.06)',
                   textAlign: 'center',
                   color: '#6B7280'
                 }}
               >
-                <h3 style={{ marginBottom: '8px', color: '#111827' }}>Sin trabajo cargado</h3>
-                <p style={{ margin: 0 }}>Seleccioná curso, alumno y entrega y presioná el botón para cargar la entrega desde el backend.</p>
+                <p style={{ margin: 0 }}>Seleccioná curso, alumno y entrega y cargá la entrega del alumno.</p>
               </div>
             )}
           </div>
