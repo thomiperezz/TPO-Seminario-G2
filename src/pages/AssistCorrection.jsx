@@ -307,7 +307,7 @@ const AssistCorrection = () => {
         body: JSON.stringify({
           courseId: selectedCourse,
           studentId: selectedStudent,
-          deliveryId: selectedDelivery,
+          deliveryName: currentDelivery?.name || selectedDelivery,
         }),
       });
 
