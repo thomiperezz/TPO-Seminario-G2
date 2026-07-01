@@ -1,19 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import Sidebar from '../components/navigation/Sidebar';
-import NavRuta from '../components/navigation/NavRuta';
+import React, { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import Header from '../components/Header';
 import '../assets/styles/global.css';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 /**
  * Página de Preguntas de Repaso
  * Muestra una lista de preguntas generadas por IA basadas en el trabajo del alumno.
  */
 const PreguntasComprensión = () => {
-  const navigate = useNavigate();
-
   const handleExport = () => {
     const contenido = questions
       .map((question, index) => `${index + 1}. ${question}`)
@@ -34,24 +30,93 @@ const PreguntasComprensión = () => {
     window.URL.revokeObjectURL(url);
   };
 
+  const courseProfiles = {
+    'course-1': {
+      name: '3° B — Informática',
+      students: [
+        { id: 'student-1', name: 'Lucas Rodríguez' },
+        { id: 'student-2', name: 'Julián Méndez' },
+        { id: 'student-3', name: 'María García' }
+      ],
+      deliveries: [
+        { id: 'delivery-1', name: 'TP — Algoritmos de ordenamiento' },
+        { id: 'delivery-2', name: 'Trabajo práctico N° 1' }
+      ]
+    },
+    'course-2': {
+      name: '3° A — Matemática',
+      students: [
+        { id: 'student-4', name: 'Sofía Pérez' },
+        { id: 'student-5', name: 'Mateo Silva' }
+      ],
+      deliveries: [
+        { id: 'delivery-3', name: 'TP — Ecuaciones lineales' },
+        { id: 'delivery-4', name: 'Parcial de álgebra' }
+      ]
+    }
+  };
+
+  const [selectedCourse, setSelectedCourse] = useState('course-1');
+  const [selectedStudent, setSelectedStudent] = useState('student-1');
+  const [selectedDelivery, setSelectedDelivery] = useState('delivery-1');
+  const [selectedExercise, setSelectedExercise] = useState(1);
   const [topic, setTopic] = useState('');
   const [questionCount, setQuestionCount] = useState(5);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingSubmission, setLoadingSubmission] = useState(false);
   const [studentText, setStudentText] = useState('');
+  const [submissionLoaded, setSubmissionLoaded] = useState(false);
+
+  const selectedCourseData = courseProfiles[selectedCourse] || courseProfiles['course-1'];
+  const currentStudent = selectedCourseData.students.find((student) => student.id === selectedStudent) || selectedCourseData.students[0];
+  const currentDelivery = selectedCourseData.deliveries.find((delivery) => delivery.id === selectedDelivery) || selectedCourseData.deliveries[0];
+
+  const handleLoadSubmission = async () => {
+    try {
+      setLoadingSubmission(true);
+      setQuestions([]);
+
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/student-work/exercise`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          courseId: selectedCourse,
+          studentId: selectedStudent,
+          deliveryId: selectedDelivery,
+          exerciseNumber: selectedExercise,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo cargar la entrega');
+      }
+
+      const data = await response.json();
+      setStudentText(data.submittedWork || data.content || data.answer || '');
+      setTopic(data.originalAssignment || data.topic || data.assignment || '');
+      setSubmissionLoaded(true);
+    } catch (error) {
+      console.error(error);
+      alert('No se pudo cargar el trabajo del alumno.');
+    } finally {
+      setLoadingSubmission(false);
+    }
+  };
 
   const generateQuestions = async () => {
-    if (!topic.trim()) {
-      alert('Ingresá la consigna de la tarea original para generar las preguntas.');
+    if (!topic.trim() || !studentText.trim()) {
+      alert('Primero cargá el trabajo del alumno y la tarea original.');
       return;
     }
+
     try {
       setLoading(true);
 
       const response = await fetch(
-        `http://localhost:8080/api/evaluation/questions?originalAssignment=${encodeURIComponent(
-          topic
-        )}&questionCount=${questionCount}`,
+        `${API_BASE_URL}/api/evaluation/questions?originalAssignment=${encodeURIComponent(topic)}&questionCount=${questionCount}`,
         {
           method: 'POST',
           headers: {
@@ -62,7 +127,6 @@ const PreguntasComprensión = () => {
       );
 
       const data = await response.json();
-
       setQuestions(data.questions || []);
     } catch (error) {
       alert('Error generando preguntas: ' + error.message);
@@ -98,72 +162,86 @@ const PreguntasComprensión = () => {
             marginBottom: '24px',
           }}
         >
-          <div>
-            <div style={{ marginBottom: '16px' }}>
-              <label
-                style={{
-                  display: 'block',
-                  marginBottom: '6px', 
-                  fontWeight: '500',
+          <div style={{ display: 'grid', gap: '12px', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginBottom: '16px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Curso:</label>
+              <select
+                value={selectedCourse}
+                onChange={(e) => {
+                  setSelectedCourse(e.target.value);
+                  setSubmissionLoaded(false);
+                  setStudentText('');
+                  setTopic('');
+                  setQuestions([]);
                 }}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #D1D5DB' }}
               >
-                Texto del alumno:
-              </label>
-
-              <textarea
-                value={studentText}
-                onChange={(e) => setStudentText(e.target.value)}
-                rows={6}
-                placeholder="Pegá acá la resolución, explicación o trabajo del alumno..."
-                style={{
-                  width: '95%',
-                  padding: '10px',
-                  borderRadius: '8px',
-                  border: '1px solid #D1D5DB',
-                  resize: 'vertical',
-                  fontSize: '14px',
-                }}
-              />
-            </div>
-            
-            <div style={{ flex: 1, marginBottom: '12px' }}>
-              <label>Tarea original: </label>
-              <input
-                type="text"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ingrese la consigna de la tarea original"
-                style={{
-                  width: '95%',
-                  padding: '10px',
-                  marginTop: '6px',
-                  borderRadius: '8px',
-                  border: '1px solid #D1D5DB'
-                }}
-              />
+                {Object.entries(courseProfiles).map(([id, course]) => (
+                  <option key={id} value={id}>{course.name}</option>
+                ))}
+              </select>
             </div>
 
-            <div style={{ marginBottom: '12px' }}>
-              <label>Cantidad de preguntas: </label>
-              <input
-                type="number"
-                min="3"
-                max="10"
-                value={questionCount}
-                onChange={(e) => setQuestionCount(Number(e.target.value))}
-                style={{
-                  width: '6%',
-                  padding: '10px',
-                  marginTop: '6px',
-                  borderRadius: '8px',
-                  border: '1px solid #D1D5DB'
+            <div>
+              <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Alumno:</label>
+              <select
+                value={selectedStudent}
+                onChange={(e) => {
+                  setSelectedStudent(e.target.value);
+                  setSubmissionLoaded(false);
+                  setStudentText('');
+                  setTopic('');
+                  setQuestions([]);
                 }}
-              />
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #D1D5DB' }}
+              >
+                {selectedCourseData.students.map((student) => (
+                  <option key={student.id} value={student.id}>{student.name}</option>
+                ))}
+              </select>
             </div>
 
+            <div>
+              <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Entrega:</label>
+              <select
+                value={selectedDelivery}
+                onChange={(e) => {
+                  setSelectedDelivery(e.target.value);
+                  setSubmissionLoaded(false);
+                  setStudentText('');
+                  setTopic('');
+                  setQuestions([]);
+                }}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #D1D5DB' }}
+              >
+                {selectedCourseData.deliveries.map((delivery) => (
+                  <option key={delivery.id} value={delivery.id}>{delivery.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Número de ejercicio:</label>
+              <select
+                value={selectedExercise}
+                onChange={(e) => {
+                  setSelectedExercise(Number(e.target.value));
+                  setSubmissionLoaded(false);
+                  setStudentText('');
+                  setTopic('');
+                  setQuestions([]);
+                }}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #D1D5DB' }}
+              >  
+                <option>Ejercicio 1</option>
+              </select>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>
             <button
-              onClick={generateQuestions}
-              disabled={loading}
+              onClick={handleLoadSubmission}
+              disabled={loadingSubmission}
               style={{
                 padding: '10px 16px',
                 border: 'none',
@@ -173,10 +251,75 @@ const PreguntasComprensión = () => {
                 cursor: 'pointer'
               }}
             >
-              {loading ? 'Generando...' : 'Generar'}
+              {loadingSubmission ? 'Cargando...' : 'Cargar trabajo'}
             </button>
-
           </div>
+
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Texto del alumno:</label>
+            <textarea
+              value={studentText}
+              onChange={(e) => setStudentText(e.target.value)}
+              rows={6}
+              placeholder="El contenido se completará automáticamente al cargar el trabajo del alumno..."
+              style={{
+                width: '97%',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #D1D5DB',
+                resize: 'vertical',
+                fontSize: '14px',
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '12px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Tarea original:</label>
+            <input
+              type="text"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              placeholder="La consigna se completará automáticamente al cargar el trabajo del alumno"
+              style={{
+                width: '97%',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #D1D5DB'
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '12px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Cantidad de preguntas:</label>
+            <input
+              type="number"
+              min="3"
+              max="10"
+              value={questionCount}
+              onChange={(e) => setQuestionCount(Number(e.target.value))}
+              style={{
+                width: '90px',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #D1D5DB'
+              }}
+            />
+          </div>
+
+          <button
+            onClick={generateQuestions}
+            disabled={loading || !submissionLoaded}
+            style={{
+              padding: '10px 16px',
+              border: 'none',
+              borderRadius: '8px',
+              background: submissionLoaded ? '#1D9E75' : '#9CA3AF',
+              color: '#fff',
+              cursor: submissionLoaded ? 'pointer' : 'not-allowed'
+            }}
+          >
+            {loading ? 'Generando...' : 'Generar'}
+          </button>
         </div>
         {/* Banner Informativo */}
         <div style={{ 
@@ -201,7 +344,7 @@ const PreguntasComprensión = () => {
         {/* Lista de Tarjetas de Preguntas */}
         {!loading && questions.length === 0 && (
           <div className='no-content-placeholder'>
-            Completa el formulario y generá preguntas de comprensión.
+            Cargá un trabajo del alumno desde el formulario para poder generar preguntas de comprensión.
           </div>
         )}
         {loading && (
